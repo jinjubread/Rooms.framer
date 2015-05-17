@@ -1,40 +1,49 @@
-# Rooms
+# Rooms by Facebook
+# Animations created by Jinju Jang
+
+#Checklist
+# - Snaps when scrolling is stopped
+# - Click event = Enlarge current (center) frame
 
 # Set up BG
 bg = new BackgroundLayer backgroundColor: "#F2f2f2"
 bg.bringToFront()
 
 # Unit Variables
-units = 3
-gutter = 20
+units = 10
+gutter = 24
 width  = 480
 height = 720
-xDistance = width + gutter
-cellIndex = 1
 cellArray = []
 
-# Carousel Layer
-carousel = new Layer
-	width: ((units-1) * gutter) + units * width
+# Way 1 
+carousel = new ScrollComponent
+	width: Screen.width + 850
 	height: height
 	backgroundColor:"Transparent"
+	contentInset: {left: gutter, right: gutter}
+
 carousel.centerY()
+carousel.speedY = 0
+carousel.speedX = 0.5
 
 # Loop to create layers
 for index in [0...units]
 		
 	cell = new Layer
-		superLayer: carousel
+		superLayer: carousel.content
 		width:  width
 		height: height 
-		x: -360 + index * (width + gutter)
+		x: index * (width + gutter)
 		borderRadius: 6
 		backgroundColor: "hsla(#{index/units*360},60%,50%,1)"
 	cellArray.push(cell)
-	
 	cell.on Events.Click, ->
-		print "clicked"
+	print cell.frame
 				
 # print Utils.modulate(cell.midX, [0, Screen.width], [0, cellArray.length]) 
 	
 # bg.backgroundColor = cellArray[cellIndex].backgroundColor
+
+print cellArray[0].x
+
